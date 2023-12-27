@@ -6,6 +6,7 @@ const createDbAxios = (databaseId) => {
   const headers = {
     Authorization: `Bearer ${API_KEY}`,
     "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
   };
 
   const instance = axios.create({
