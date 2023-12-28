@@ -3,21 +3,30 @@ import dbAxios from "./dbAxios";
 const postReview = async (review) => {
   const PATH = "pages";
   const DATABASE_ID = "d571c589-7d85-4e54-bd89-275d12338a35";
-  const data = {
+
+  const title = { title: [{ text: { content: review.title } }] };
+  const body = { rich_text: [{ text: { content: review.body } }] };
+  const animeId = { rich_text: [{ text: { content: review.animeId } }] };
+  const overallRating = { number: review.overallRating };
+  const storiesRating = { number: review.storiesRating };
+  const picturesRating = { number: review.picturesRating };
+  const musicRating = { number: review.musicRating };
+
+  const requestBody = {
     parent: { database_id: DATABASE_ID },
     properties: {
-      title: { title: [{ text: { content: review.title } }] },
-      body: { rich_text: [{ text: { content: review.body } }] },
-      anime_id: { rich_text: [{ text: { content: review.animeItemId } }] },
-      overall_rating: { number: review.overallRating },
-      stories_rating: { number: review.storiesRating },
-      pictures_rating: { number: review.picturesRating },
-      music_rating: { number: review.musicRating },
+      title: title,
+      body: body,
+      anime_id: animeId,
+      overall_rating: overallRating,
+      stories_rating: storiesRating,
+      pictures_rating: picturesRating,
+      music_rating: musicRating,
     },
   };
 
   try {
-    const response = await dbAxios.post(PATH, data);
+    const response = await dbAxios.post(PATH, requestBody);
     return response.data.results;
   } catch (error) {
     console.error(error);
