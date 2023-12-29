@@ -1,8 +1,7 @@
 import dbAxios from "./dbAxios";
 
-const getReviews = async (animeId) => {
+const getReviews = (setState, animeId) => {
   const PATH = "databases/d571c5897d854e54bd89275d12338a35/query";
-
   const requestBody = {
     filter: {
       property: "anime_id",
@@ -10,12 +9,18 @@ const getReviews = async (animeId) => {
     },
   };
 
-  try {
-    const response = await dbAxios.post(PATH, requestBody);
-    return response.data.results;
-  } catch (error) {
-    console.error(error);
-  }
+  const setReviews = (response) => {
+    const reviews = response.data.results;
+    setState(reviews);
+  };
+  const logError = (error) => {
+    console.log(error);
+  };
+
+  dbAxios
+    .post(PATH, requestBody)
+    .then(setReviews)
+    .catch(logError);
 };
 
 export default getReviews;
