@@ -1,14 +1,20 @@
 import dbAxios from "./dbAxios";
 
-const getAnime = async (requestBody = {}) => {
+const getAnime = (setState, requestBody = {}) => {
   const PATH = "databases/9ec213bc61bd4af5bbdfc74b844cb4b7/query";
 
-  try {
-    const response = await dbAxios.post(PATH, requestBody);
-    return response.data.results;
-  } catch (error) {
-    console.error(error);
-  }
+  const setAnime = (response) => {
+    const anime = response.data.results;
+    setState(anime);
+  };
+  const logError = (error) => {
+    console.log(error);
+  };
+
+  dbAxios
+    .post(PATH, requestBody)
+    .then(setAnime)
+    .catch(logError);
 };
 
 export default getAnime;
