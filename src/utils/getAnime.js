@@ -8,7 +8,7 @@ const getAnime = (setState, requestBody = {}) => {
     setState(anime);
   };
   const logError = (error) => {
-    console.log(error);
+    console.error(error);
   };
 
   dbAxios

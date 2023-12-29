@@ -26,7 +26,7 @@ const postReview = (review) => {
   };
 
   const logError = (error) => {
-    console.log(error);
+    console.error(error);
   };
 
   dbAxios.post(PATH, requestBody).catch(logError);

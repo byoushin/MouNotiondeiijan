@@ -14,7 +14,7 @@ const getReviews = (setState, animeId) => {
     setState(reviews);
   };
   const logError = (error) => {
-    console.log(error);
+    console.error(error);
   };
 
   dbAxios
