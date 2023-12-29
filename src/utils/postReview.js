@@ -1,6 +1,6 @@
 import dbAxios from "./dbAxios";
 
-const postReview = async (review) => {
+const postReview = (review) => {
   const PATH = "pages";
   const DATABASE_ID = "d571c589-7d85-4e54-bd89-275d12338a35";
 
@@ -25,12 +25,11 @@ const postReview = async (review) => {
     },
   };
 
-  try {
-    const response = await dbAxios.post(PATH, requestBody);
-    return response.data.results;
-  } catch (error) {
-    console.error(error);
-  }
+  const logError = (error) => {
+    console.log(error);
+  };
+
+  dbAxios.post(PATH, requestBody).catch(logError);
 };
 
 export default postReview;
