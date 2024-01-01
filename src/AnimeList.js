@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import getAnime from "./utils/getAnime";
 import SearchBox from "./SearchBox";
 
 const AnimeList = () => {
   const navigation = useNavigation();
 
-  const [animeList, setAnimeList] = useState();
+  const [anime, setAnime] = useState();
   const [isHome, setIsHome] = useState(true);
 
   const subTitle = isHome ? "今人気のアニメ" : "結果";
+
+  const didMount = () => {
+    getAnime(setAnime);
+  };
+  useEffect(didMount, []);
 
   return (
     <View style={styles.body}>
