@@ -5,7 +5,6 @@ const getAnime = (setState, requestBody = {}) => {
 
   const setAnime = (response) => {
     const anime = response.data.results;
-    console.log(anime);
     setState(anime);
   };
   const logError = (error) => {
