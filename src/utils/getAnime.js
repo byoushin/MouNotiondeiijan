@@ -5,16 +5,14 @@ const getAnime = (setState, requestBody = {}) => {
 
   const setAnime = (response) => {
     const anime = response.data.results;
+    console.log(anime);
     setState(anime);
   };
   const logError = (error) => {
     console.error(error);
   };
 
-  dbAxios
-    .post(PATH, requestBody)
-    .then(setAnime)
-    .catch(logError);
+  dbAxios.post(PATH, requestBody).then(setAnime).catch(logError);
 };
 
 export default getAnime;

@@ -11,10 +11,7 @@ const getReviews = (setState, requestBody = {}) => {
     console.error(error);
   };
 
-  dbAxios
-    .post(PATH, requestBody)
-    .then(setReviews)
-    .catch(logError);
+  dbAxios.post(PATH, requestBody).then(setReviews).catch(logError);
 };
 
 export default getReviews;
