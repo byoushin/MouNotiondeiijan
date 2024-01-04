@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import getAnime from "./utils/getAnime";
+import LeftArrow from "./components/LeftArrow";
 import SearchBox from "./SearchBox";
+import AnimeCard from "./components/AnimeCard";
 
 const AnimeList = () => {
-  const navigation = useNavigation();
-
   const [anime, setAnime] = useState();
-  const [isHome, setIsHome] = useState(true);
+  const [isSearch, setIsSearch] = useState(true);
+  const [isSort, setIsSort] = useState(true);
 
-  const subTitle = isHome ? "今人気のアニメ" : "結果";
+  const subTitle = isSearch ? "今人気のアニメ" : "結果";
 
   const didMount = () => {
     getAnime(setAnime);
   };
   useEffect(didMount, []);
 
+  const backHome = () => {
+    setIsSearch(false);
+    getAnime(setAnime);
+  };
+
   return (
-    <View style={styles.body}>
+    <View style={styles.contianer}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>アニメを検索</Text>
+        {isSearch ? (
+          <Text style={styles.title}>アニメを検索</Text>
+        ) : (
+          <TouchableOpacity onPress={backHome}>
+            <LeftArrow />
+          </TouchableOpacity>
+        )}
       </View>
       <SearchBox />
       <View style={styles.subTitleContainer}>
@@ -29,12 +40,16 @@ const AnimeList = () => {
           <Text style={styles.sortButtonText}>並べ替え</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.animeCardContainer}>
+        {anime &&
+          anime.map((anime) => <AnimeCard key={anime.id} anime={anime} />)}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body: {
+  contianer: {
     flex: 1,
     paddingTop: 44,
     paddingBottom: 34,
@@ -42,19 +57,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#00050D",
   },
   titleContainer: {
-    height: 46,
     justifyContent: "center",
+    height: 46,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "white",
   },
+  backHomeButton: {
+    width: 16,
+    aspectRatio: 1,
+  },
   subTitleContainer: {
-    height: 54,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    height: 54,
   },
   subTitle: {
     fontSize: 16,
@@ -62,16 +81,19 @@ const styles = StyleSheet.create({
     color: "white",
   },
   sortButton: {
+    justifyContent: "center",
     height: 32,
     paddingHorizontal: 16,
-    borderRadius: 16,
-    justifyContent: "center",
+    borderRadius: "50%",
     backgroundColor: "#32363D",
   },
   sortButtonText: {
     fontSize: 16,
     fontWeight: "600",
     color: "white",
+  },
+  animeCardContainer: {
+    gap: 12,
   },
 });
 
