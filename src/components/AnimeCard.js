@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import getReviews from "../utils/getReviews";
 import getRatingAverages from "../utils/getRatingAverages";
 import Star from "./Star";
 import UnfilledStar from "./UnfilledStar";
 
 const AnimeCard = ({ anime }) => {
+  const navigation = useNavigation();
   const [reviews, setReviews] = useState();
 
   const MAX_RATING = 5;
@@ -17,11 +19,6 @@ const AnimeCard = ({ anime }) => {
   const thumbnailUrl = properties.thumbnail.files[0].file.url;
   const title = properties.title.rich_text[0].text.content;
 
-  const didMount = () => {
-    getReviews(setReviews);
-  };
-  useEffect(didMount, []);
-
   let rating = 0;
   if (reviews) {
     const ratingAverages = getRatingAverages(reviews, animeId);
@@ -29,8 +26,17 @@ const AnimeCard = ({ anime }) => {
   }
   const insufficientRating = MAX_RATING - rating;
 
+  const goWorkPage = () => {
+    navigation.navigate("AnimeDetail", { animeId: animeId });
+  };
+
+  const didMount = () => {
+    getReviews(setReviews);
+  };
+  useEffect(didMount, []);
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={goWorkPage}>
       <Image source={{ uri: thumbnailUrl }} style={styles.thumbnail} />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -47,7 +53,7 @@ const AnimeCard = ({ anime }) => {
           ))}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
