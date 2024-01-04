@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 
 const AnimeCard = ({ anime }) => {
   const properties = anime.properties;
