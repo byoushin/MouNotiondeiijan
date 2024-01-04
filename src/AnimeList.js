@@ -13,7 +13,7 @@ import AnimeCard from "./components/AnimeCard";
 
 const AnimeList = () => {
   const [anime, setAnime] = useState();
-  const [isSearch, setIsSearch] = useState(true);
+  const [isSearch, setIsSearch] = useState(false);
   const [isSort, setIsSort] = useState(false);
 
   const subTitle = isSearch ? "今人気のアニメ" : "結果";
@@ -36,11 +36,11 @@ const AnimeList = () => {
     <View style={styles.contianer}>
       <View style={styles.titleContainer}>
         {isSearch ? (
-          <Text style={styles.title}>アニメを検索</Text>
-        ) : (
           <TouchableOpacity onPress={backHome}>
             <LeftArrow />
           </TouchableOpacity>
+        ) : (
+          <Text style={styles.title}>アニメを検索</Text>
         )}
       </View>
       <SearchBox />
