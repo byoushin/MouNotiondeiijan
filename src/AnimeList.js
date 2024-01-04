@@ -16,7 +16,7 @@ const AnimeList = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [isSort, setIsSort] = useState(false);
 
-  const subTitle = isSearch ? "今人気のアニメ" : "結果";
+  const subTitle = isSearch ? "結果" : "今人気のアニメ";
 
   const didMount = () => {
     getAnime(setAnime);
