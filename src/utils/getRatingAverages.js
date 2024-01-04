@@ -1,7 +1,7 @@
 const getRatingAverages = (reviewsState, targetAnime) => {
   const isTargetReview = (review) => {
     const currentAnimeId = review.properties.anime_id.rich_text[0].text.content;
-    return currentAnimeId == targetAnime;
+    return currentAnimeId === targetAnime;
   };
   const targetReviews = reviewsState.filter(isTargetReview);
   const targetReviewsLength = targetReviews.length;
