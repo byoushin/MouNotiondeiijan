@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import getAnime from "./utils/getAnime";
 import LeftArrow from "./components/LeftArrow";
 import SearchBox from "./SearchBox";
@@ -40,10 +46,10 @@ const AnimeList = () => {
           <Text style={styles.sortButtonText}>並べ替え</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.animeCardContainer}>
+      <ScrollView contentContainerStyle={styles.animeCardContainer}>
         {anime &&
           anime.map((anime) => <AnimeCard key={anime.id} anime={anime} />)}
-      </View>
+      </ScrollView>
     </View>
   );
 };
