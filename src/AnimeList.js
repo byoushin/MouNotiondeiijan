@@ -14,7 +14,7 @@ import AnimeCard from "./components/AnimeCard";
 const AnimeList = () => {
   const [anime, setAnime] = useState();
   const [isSearch, setIsSearch] = useState(true);
-  const [isSort, setIsSort] = useState(true);
+  const [isSort, setIsSort] = useState(false);
 
   const subTitle = isSearch ? "今人気のアニメ" : "結果";
 
@@ -27,6 +27,12 @@ const AnimeList = () => {
     setIsSearch(false);
     getAnime(setAnime);
   };
+
+  const openSort = () => {
+    setIsSort(true);
+  };
+
+  console.log(isSort);
 
   return (
     <View style={styles.contianer}>
@@ -42,7 +48,7 @@ const AnimeList = () => {
       <SearchBox />
       <View style={styles.subTitleContainer}>
         <Text style={styles.subTitle}>{subTitle}</Text>
-        <TouchableOpacity style={styles.sortButton}>
+        <TouchableOpacity style={styles.sortButton} onPress={openSort}>
           <Text style={styles.sortButtonText}>並べ替え</Text>
         </TouchableOpacity>
       </View>
