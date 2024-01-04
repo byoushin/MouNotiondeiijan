@@ -32,8 +32,6 @@ const AnimeList = () => {
     setIsSort(true);
   };
 
-  console.log(isSort);
-
   return (
     <View style={styles.contianer}>
       <View style={styles.titleContainer}>
