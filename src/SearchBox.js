@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
 const SearchBox = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const handleSearch = () => {
-    console.log('Search Text:', searchText);
+    console.log("Search Text:", searchText);
     // 検索ロジックをここに実装するか、親コンポーネントに検索テキストを渡すなどの操作を行います
   };
 
@@ -29,9 +35,8 @@ const SearchBox = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
   icon: {
     width: 24,
@@ -41,12 +46,10 @@ const styles = StyleSheet.create({
   input: {
     flex: 1, // 残りのスペースをTextInputが占めるようにする
     height: 44,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
     paddingLeft: 10,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 8,
+    fontWeight: "600",
   },
 });
 
