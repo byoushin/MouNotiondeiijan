@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const SearchBox = () => {
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = () => {
-    // ここで検索処理を実装するか、親コンポーネントに検索テキストを渡すなどの操作を行います
     console.log('Search Text:', searchText);
-    // 例えば、検索APIを呼び出すなどの処理を追加できます
+    // 検索ロジックをここに実装するか、親コンポーネントに検索テキストを渡すなどの操作を行います
   };
 
   return (
     <View style={styles.container}>
+      {/* <Image サーチアイコンは入力フォームに追加はできないとのこと
+        source={require('.././assets/image/search_icon.png')} // 画像のパスに変更する
+        style={styles.icon}
+        resizeMode="contain" // 画像のリサイズモードを指定
+      /> */}
       <TextInput
         style={styles.input}
-        placeholder="検索キーワードを入力"
+        placeholder="タイトル、またはキーワード"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
+        onSubmitEditing={handleSearch}
       />
-      <Button title="検索" onPress={handleSearch} />
     </View>
   );
 };
@@ -29,14 +33,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
-  input: {
-    flex: 1,
-    height: 40,
-    borderColor: '#fff',
-    color: '#fff',
-    borderWidth: 1,
+  icon: {
+    width: 24,
+    height: 24,
     marginRight: 10,
+  },
+  input: {
+    flex: 1, // 残りのスペースをTextInputが占めるようにする
+    height: 44,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
     paddingLeft: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
   },
 });
 
