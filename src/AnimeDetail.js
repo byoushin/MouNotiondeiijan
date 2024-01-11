@@ -1,16 +1,11 @@
 import React from "react";
 import {
   View,
+  TouchableOpacity,
+  Image,
   Text,
   FlatList,
-  ScrollView,
-  Image,
   StyleSheet,
-  Platform,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Keyboard,
-  SafeAreaView,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 const AnimeDetail = () => {
