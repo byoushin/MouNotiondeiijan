@@ -12,6 +12,7 @@ import getReviews from "./utils/getReviews";
 import getRatingAverages from "./utils/getRatingAverages";
 import Star from "./components/Star";
 import UnfilledStar from "./components/UnfilledStar";
+import ReviewCard from "./components/ReviewCard";
 
 const AnimeDetail = () => {
   const navigation = useNavigation();
@@ -95,6 +96,8 @@ const AnimeDetail = () => {
           </View>
         </View>
       ))}
+      {reviews &&
+        reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
     </View>
   );
 
