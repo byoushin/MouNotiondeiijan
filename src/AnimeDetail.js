@@ -1,35 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
+  StyleSheet,
   View,
   TouchableOpacity,
   Image,
   Text,
   FlatList,
-  StyleSheet,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import getReviews from "./utils/getReviews";
+import getRatingAverages from "./utils/getRatingAverages";
+import Star from "./components/Star";
+import UnfilledStar from "./components/UnfilledStar";
+
 const AnimeDetail = () => {
-  const route = useRoute();
-  const { animeId } = route.params;
-  const textArray = [
-    "呪術廻戦 渋谷事変",
-    "ダークファンタジー",
-    "総合評価",
-    "4.1",
-  ];
-  const textArray2 = [
-    "タイトル",
-    "あああああああああああああああああああああああああああああああああああああああああああああああああ",
-    "呪術廻戦",
-    "4.1",
-  ];
   const navigation = useNavigation();
-  const handleSubmit = () => {
+  const route = useRoute();
+  const [reviews, setReviews] = useState();
+
+  const MAX_RATING = 5;
+  const STAR_WIDTH = 17;
+  const STAR_HEIGHT = 16;
+
+  const { properties } = route.params;
+  const animeId = properties.anime_id.title[0].text.content;
+  const thumbnailUrl = properties.thumbnail.files[0].file.url;
+  const title = properties.title.rich_text[0].text.content;
+  const genreObjects = properties.genres.multi_select;
+  const genre = genreObjects
+    .map((genreObjects) => genreObjects.name)
+    .join(", ");
+
+  const ratingAverageValues = reviews && getRatingAverages(reviews, animeId);
+  const overallRating = ratingAverageValues ? ratingAverageValues.overall : 0;
+  const storiesRating = ratingAverageValues ? ratingAverageValues.stories : 0;
+  const picturesRating = ratingAverageValues ? ratingAverageValues.pictures : 0;
+  const musicRating = ratingAverageValues ? ratingAverageValues.music : 0;
+  const ratingAverages = [
+    { name: "総合評価", value: overallRating },
+    { name: "ストーリー", value: storiesRating },
+    { name: "作画", value: picturesRating },
+    { name: "音楽", value: musicRating },
+  ];
+
+  const getReviewsData = {
+    filter: {
+      property: "anime_id",
+      rich_text: { equals: animeId },
+    },
+  };
+
+  const navigateReviewPage = () => {
     navigation.navigate("Review");
   };
-  const reviewSubmit = () => {
-    navigation.navigate("Evaluation");
+
+  const didMount = () => {
+    getReviews(setReviews, getReviewsData);
   };
+  useEffect(didMount, []);
 
   // FlatListでアイテムを描画するための関数
   const renderItem = () => (
@@ -44,63 +72,29 @@ const AnimeDetail = () => {
         />
         <Text></Text>
       </TouchableOpacity>
-      <Image
-        style={styles.anime_image}
-        source={require(".././assets/image/mv_re_new.jpg")}
-      />
+      <Image source={{ uri: thumbnailUrl }} style={styles.anime_image} />
       <View style={styles.overlay} />
-      <Text style={styles.title}>{textArray[0]}</Text>
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+      <Text style={styles.title}>{title}</Text>
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={navigateReviewPage}
+      >
         <Text style={styles.submitButtonText}>🖋レビューを書く</Text>
       </TouchableOpacity>
-      <Text style={styles.genre}>{textArray[1]}</Text>
-      <Text style={styles.evaluation}>{textArray[2]}</Text>
-      <Image
-        style={styles.image1}
-        source={require(".././assets/image/Stars.png")}
-      />
-      <Text style={styles.text1}>ストーリー</Text>
-      <Image
-        style={styles.image1}
-        source={require(".././assets/image/Stars.png")}
-      />
-      <Text style={styles.text1}>作画</Text>
-      <Image
-        style={styles.image1}
-        source={require(".././assets/image/Stars.png")}
-      />
-      <Text style={styles.text1}>音楽</Text>
-      <Image
-        style={styles.image1}
-        source={require(".././assets/image/Stars.png")}
-      />
-
-      <View style={styles.items}>
-        <View style={styles.textContainer}>
-          <Text style={styles.reviews}>レビュー</Text>
+      <Text style={styles.genre}>{genre}</Text>
+      {ratingAverages.map((average) => (
+        <View key={average.name}>
+          <Text style={styles.text1}>{average.name}</Text>
+          <View style={styles.rating}>
+            {[...Array(average.value)].map((_, i) => (
+              <Star key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
+            ))}
+            {[...Array(MAX_RATING - average.value)].map((_, i) => (
+              <UnfilledStar key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
+            ))}
+          </View>
         </View>
-        <View style={styles.horizontalContainer}>
-          <Image
-            style={styles.image1}
-            source={require(".././assets/image/Stars.png")}
-          />
-          <Text style={styles.reviewTitle}>{textArray2[0]}</Text>
-        </View>
-        <View style={styles.borderLineContainer}>
-          <Text style={styles.text}>{textArray2[1]}</Text>
-        </View>
-
-        <View style={styles.horizontalContainer}>
-          <Image
-            style={styles.image1}
-            source={require(".././assets/image/Stars.png")}
-          />
-          <Text style={styles.reviewTitle}>{textArray2[0]}</Text>
-        </View>
-        <View style={styles.borderLineContainer}>
-          <Text style={styles.text}>{textArray2[1]}</Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 
@@ -117,6 +111,7 @@ const AnimeDetail = () => {
 };
 const styles = StyleSheet.create({
   body: {
+    flex: 1,
     backgroundColor: "#00050D",
   },
   backLink: {
@@ -168,6 +163,9 @@ const styles = StyleSheet.create({
     lineHeight: 18, // 128.571%
     marginLeft: 20,
     marginTop: 20,
+  },
+  rating: {
+    flexDirection: "row",
   },
   evaluation: {
     // marginTop: 20,
