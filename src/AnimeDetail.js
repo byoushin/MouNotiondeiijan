@@ -3,13 +3,16 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ScrollView,
   Image,
   Text,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import getReviews from "./utils/getReviews";
 import getRatingAverages from "./utils/getRatingAverages";
+import LeftArrow from "./components/LeftArrow";
 import Star from "./components/Star";
 import UnfilledStar from "./components/UnfilledStar";
 import ReviewCard from "./components/ReviewCard";
@@ -51,6 +54,9 @@ const AnimeDetail = () => {
     },
   };
 
+  const navigateHome = () => {
+    navigation.navigate("AnimeList");
+  };
   const navigateReviewPage = () => {
     navigation.navigate("Review");
   };
@@ -60,179 +66,127 @@ const AnimeDetail = () => {
   };
   useEffect(didMount, []);
 
-  // FlatListでアイテムを描画するための関数
-  const renderItem = () => (
-    <View style={styles.items}>
-      <TouchableOpacity
-        style={styles.backLink}
-        onPress={() => navigation.navigate("AnimeList")}
-      >
-        <Image
-          style={styles.arrow}
-          source={require(".././assets/image/arrow.png")}
-        />
-        <Text></Text>
-      </TouchableOpacity>
-      <Image source={{ uri: thumbnailUrl }} style={styles.anime_image} />
-      <View style={styles.overlay} />
-      <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={navigateReviewPage}
-      >
-        <Text style={styles.submitButtonText}>🖋レビューを書く</Text>
-      </TouchableOpacity>
-      <Text style={styles.genre}>{genre}</Text>
-      {ratingAverages.map((average) => (
-        <View key={average.name}>
-          <Text style={styles.text1}>{average.name}</Text>
-          <View style={styles.rating}>
-            {[...Array(average.value)].map((_, i) => (
-              <Star key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
-            ))}
-            {[...Array(MAX_RATING - average.value)].map((_, i) => (
-              <UnfilledStar key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
-            ))}
-          </View>
-        </View>
-      ))}
-      {reviews &&
-        reviews.map((review) => <ReviewCard key={review.id} review={review} />)}
+  const ratings = ratingAverages.map((average) => (
+    <View key={average.name} style={styles.ratingContainer}>
+      <Text style={styles.sectionTitle}>{average.name}</Text>
+      <View style={styles.rating}>
+        {[...Array(average.value)].map((_, i) => (
+          <Star key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
+        ))}
+        {[...Array(MAX_RATING - average.value)].map((_, i) => (
+          <UnfilledStar key={i} width={STAR_WIDTH} height={STAR_HEIGHT} />
+        ))}
+      </View>
     </View>
-  );
+  ));
+
+  const reviewCards =
+    reviews &&
+    reviews.map((review) => <ReviewCard key={review.id} review={review} />);
 
   return (
     <View style={styles.body}>
-      {/* FlatListコンポーネントを使ってアイテムを描画 */}
-      <FlatList
-        data={[""]} // Empty array because we're rendering only one item
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <TouchableOpacity style={styles.backHomeButton} onPress={navigateHome}>
+        <LeftArrow />
+      </TouchableOpacity>
+      <ScrollView style={styles.main}>
+        <View style={styles.thumbnailContainer}>
+          <Image style={styles.thumbnail} source={{ uri: thumbnailUrl }} />
+        </View>
+        <Text style={styles.title}>{title}</Text>
+        <TouchableOpacity
+          style={styles.reviewButton}
+          onPress={navigateReviewPage}
+        >
+          <Text style={styles.reviewButtonText}>レビューを書く</Text>
+        </TouchableOpacity>
+        <View style={styles.genres}>
+          <Text style={styles.sectionTitle}>{genre}</Text>
+        </View>
+        <View style={styles.ratingsWrapper}>{ratings}</View>
+        <View style={styles.reviewsTitleContainer}>
+          <View style={styles.reviewsTitle}>
+            <Text style={styles.sectionTitle}>レビュー</Text>
+          </View>
+        </View>
+        {reviewCards}
+      </ScrollView>
     </View>
   );
 };
+
+const windowWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    paddingTop: 44,
+    paddingBottom: 34,
+    paddingHorizontal: 20,
     backgroundColor: "#00050D",
   },
-  backLink: {
-    marginLeft: 9,
-    marginTop: 16,
-    marginBottom: 15,
-    flexDirection: "row",
+  backHomeButton: {
+    height: 44,
+    justifyContent: "center",
   },
-  arrow: {
-    top: 30,
-    width: 9.42,
-    height: 16,
+  main: {
+    overflow: "visible",
   },
-  anime_image: {
-    width: 390,
-    height: 259,
-    top: 20,
+  thumbnailContainer: {
+    alignItems: "center",
+  },
+  thumbnail: {
+    width: windowWidth,
+    aspectRatio: 16 / 9,
   },
   title: {
-    // marginTop: 2,
-    // marginBottom:15,
+    marginBottom: 16,
+    color: "white",
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff",
-    padding: 10,
-    margin: 10,
   },
-  submitButton: {
-    width: 350,
+  reviewButton: {
     height: 44,
-    padding: 10,
-    borderRadius: 8,
-    alignItems: "center", // テキストを水平方向に中央揃え
     justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
     backgroundColor: "#FFF",
-    marginLeft: 20,
   },
-  submitButtonText: {
-    color: "#333", // カラーコードをシングルクォートで括る
+  reviewButtonText: {
+    color: "#333333",
     fontSize: 16,
-    fontStyle: "normal",
     fontWeight: "600",
   },
-  genre: {
-    color: "#FFF",
+  genres: {
+    marginTop: 24,
+  },
+  sectionTitle: {
+    color: "white",
     fontSize: 14,
-    fontStyle: "normal",
     fontWeight: "600",
-    lineHeight: 18, // 128.571%
-    marginLeft: 20,
-    marginTop: 20,
+  },
+  ratingsWrapper: {
+    gap: 16,
+    marginTop: 24,
+  },
+  ratingContainer: {
+    gap: 4,
   },
   rating: {
     flexDirection: "row",
   },
-  evaluation: {
-    // marginTop: 20,
-    color: "#FFF",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 18, // 128.571%
-    marginLeft: 20,
-    marginTop: 20,
-  },
-  text1: {
-    // marginTop: 20,
-    color: "#FFF",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 18, // 128.571%
-    marginLeft: 20,
-    marginTop: 20,
-  },
-  image1: {
-    marginHorizontal: 20,
-  },
-  reviews: {
-    color: "#FFF",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 18, // 128.571%
-    textAlign: "center",
-    padding: 30,
-  },
-  textContainer: {
-    marginTop: 10,
-    borderBottomWidth: 2, // ボーダーラインの幅
-    borderBottomColor: "#FFF", // ボーダーラインの色
-    marginBottom: 10, // 必要に応じてマージンを調整
-  },
-  reviewTitle: {
-    marginTop: 4,
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#fff",
-    padding: 5,
-  },
-  horizontalContainer: {
-    flexDirection: "row",
+  reviewsTitleContainer: {
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
   },
-  text: {
-    color: "#FFF",
-    fontSize: 18,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 18, // 128.571%
-    padding: 10,
-    marginBottom: 10,
-  },
-  borderLineContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#fff", // ボーダーラインの色を設定してください
-    marginBottom: 10, // 適切なマージンを設定してください
+  reviewsTitle: {
+    width: windowWidth,
+    height: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomWidth: 2,
+    borderColor: "white",
   },
 });
+
 export default AnimeDetail;
