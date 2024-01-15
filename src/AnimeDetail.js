@@ -89,27 +89,25 @@ const AnimeDetail = () => {
       <TouchableOpacity style={styles.backHomeButton} onPress={navigateHome}>
         <LeftArrow />
       </TouchableOpacity>
-      <ScrollView style={styles.main} showsVerticalScrollIndicator={false}>
-        <View style={styles.thumbnailContainer}>
-          <Image style={styles.thumbnail} source={{ uri: thumbnailUrl }} />
-        </View>
-        <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity
-          style={styles.reviewButton}
-          onPress={navigateReviewPage}
-        >
-          <Text style={styles.reviewButtonText}>レビューを書く</Text>
-        </TouchableOpacity>
-        <View style={styles.genres}>
-          <Text style={styles.sectionTitle}>{genre}</Text>
-        </View>
-        <View style={styles.ratingsWrapper}>{ratings}</View>
-        <View style={styles.reviewsTitleContainer}>
-          <View style={styles.reviewsTitle}>
-            <Text style={styles.sectionTitle}>レビュー</Text>
+      <ScrollView>
+        <Image style={styles.thumbnail} source={{ uri: thumbnailUrl }} />
+        <View style={styles.main}>
+          <Text style={styles.title}>{title}</Text>
+          <TouchableOpacity
+            style={styles.reviewButton}
+            onPress={navigateReviewPage}
+          >
+            <Text style={styles.reviewButtonText}>レビューを書く</Text>
+          </TouchableOpacity>
+          <View style={styles.genres}>
+            <Text style={styles.sectionTitle}>{genre}</Text>
           </View>
+          <View style={styles.ratingsWrapper}>{ratings}</View>
         </View>
-        {reviewCards}
+        <View style={styles.reviewsTitle}>
+          <Text style={styles.sectionTitle}>レビュー</Text>
+        </View>
+        <View style={styles.reviewsContainer}>{reviewCards}</View>
       </ScrollView>
     </View>
   );
@@ -122,22 +120,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 44,
     paddingBottom: 34,
-    paddingHorizontal: 20,
     backgroundColor: "#00050D",
   },
   backHomeButton: {
     height: 44,
     justifyContent: "center",
-  },
-  main: {
-    overflow: "visible",
-  },
-  thumbnailContainer: {
-    alignItems: "center",
+    paddingHorizontal: 20,
   },
   thumbnail: {
     width: windowWidth,
     aspectRatio: 16 / 9,
+  },
+  main: {
+    paddingHorizontal: 20,
   },
   title: {
     marginBottom: 16,
@@ -175,10 +170,6 @@ const styles = StyleSheet.create({
   rating: {
     flexDirection: "row",
   },
-  reviewsTitleContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
   reviewsTitle: {
     width: windowWidth,
     height: 44,
@@ -186,6 +177,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 2,
     borderColor: "white",
+  },
+  reviewsContainer: {
+    paddingHorizontal: 20,
   },
 });
 
