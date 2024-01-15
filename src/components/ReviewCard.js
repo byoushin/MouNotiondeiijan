@@ -15,7 +15,7 @@ const ReviewCard = ({ review }) => {
   const insufficientRating = MAX_RATING - rating;
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={styles.rating}>
           {[...Array(rating)].map((_, i) => (
@@ -27,12 +27,18 @@ const ReviewCard = ({ review }) => {
         </View>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <Text style={styles.title}>{letterBody}</Text>
+      <Text style={styles.text}>{letterBody}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 16,
+    gap: 8,
+    borderBottomWidth: 1,
+    borderColor: "#363A40",
+  },
   titleContainer: {
     flexDirection: "row",
     gap: 8,
@@ -43,6 +49,9 @@ const styles = StyleSheet.create({
   title: {
     color: "white",
     fontWeight: "600",
+  },
+  text: {
+    color: "white",
   },
 });
 
