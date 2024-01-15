@@ -89,7 +89,7 @@ const AnimeDetail = () => {
       <TouchableOpacity style={styles.backHomeButton} onPress={navigateHome}>
         <LeftArrow />
       </TouchableOpacity>
-      <ScrollView style={styles.main}>
+      <ScrollView style={styles.main} showsVerticalScrollIndicator={false}>
         <View style={styles.thumbnailContainer}>
           <Image style={styles.thumbnail} source={{ uri: thumbnailUrl }} />
         </View>
