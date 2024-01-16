@@ -30,6 +30,7 @@ const AnimeDetail = () => {
   const animeId = properties.anime_id.title[0].text.content;
   const thumbnailUrl = properties.thumbnail.files[0].file.url;
   const title = properties.title.rich_text[0].text.content;
+  const description = properties.description.rich_text[0].text.content;
   const genreObjects = properties.genres.multi_select;
   const genre = genreObjects
     .map((genreObjects) => genreObjects.name)
@@ -93,16 +94,17 @@ const AnimeDetail = () => {
         <Image style={styles.thumbnail} source={{ uri: thumbnailUrl }} />
         <View style={styles.main}>
           <Text style={styles.title}>{title}</Text>
-          <TouchableOpacity
-            style={styles.reviewButton}
-            onPress={navigateReviewPage}
-          >
-            <Text style={styles.reviewButtonText}>レビューを書く</Text>
-          </TouchableOpacity>
-          <View style={styles.genres}>
+          <View style={styles.descriptions}>
+            <TouchableOpacity
+              style={styles.reviewButton}
+              onPress={navigateReviewPage}
+            >
+              <Text style={styles.reviewButtonText}>レビューを書く</Text>
+            </TouchableOpacity>
+            <Text style={styles.sectionTitle}>{description}</Text>
             <Text style={styles.sectionTitle}>{genre}</Text>
+            <View style={styles.ratingsWrapper}>{ratings}</View>
           </View>
-          <View style={styles.ratingsWrapper}>{ratings}</View>
         </View>
         <View style={styles.reviewsTitle}>
           <Text style={styles.sectionTitle}>レビュー</Text>
@@ -152,8 +154,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-  genres: {
-    marginTop: 24,
+  descriptions: {
+    gap: 24,
   },
   sectionTitle: {
     color: "white",
@@ -162,7 +164,6 @@ const styles = StyleSheet.create({
   },
   ratingsWrapper: {
     gap: 16,
-    marginTop: 24,
   },
   ratingContainer: {
     gap: 4,
