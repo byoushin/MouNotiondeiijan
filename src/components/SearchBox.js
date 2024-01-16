@@ -1,33 +1,31 @@
 import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
+import getAnime from "../utils/getAnime";
 
-const SearchBox = () => {
+const SearchBox = ({ setAnime }) => {
   const [searchText, setSearchText] = useState("");
 
-  const handleSearch = () => {
-    console.log("Search Text:", searchText);
-    // 検索ロジックをここに実装するか、親コンポーネントに検索テキストを渡すなどの操作を行います
+  const search = () => {
+    const getAnimeData = {
+      filter: {
+        or: [
+          { property: "title", rich_text: { contains: searchText } },
+          { property: "description", rich_text: { contains: searchText } },
+        ],
+      },
+    };
+
+    getAnime(setAnime, getAnimeData);
   };
 
   return (
     <View style={styles.container}>
-      {/* <Image サーチアイコンは入力フォームに追加はできないとのこと
-        source={require('.././assets/image/search_icon.png')} // 画像のパスに変更する
-        style={styles.icon}
-        resizeMode="contain" // 画像のリサイズモードを指定
-      /> */}
       <TextInput
         style={styles.input}
-        placeholder="タイトル、またはキーワード"
         value={searchText}
         onChangeText={(text) => setSearchText(text)}
-        onSubmitEditing={handleSearch}
+        onSubmitEditing={search}
+        placeholder="タイトル、またはキーワード"
       />
     </View>
   );

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import getAnime from "./utils/getAnime";
 import LeftArrow from "./components/LeftArrow";
-import SearchBox from "./SearchBox";
+import SearchBox from "./components/SearchBox";
 import AnimeCard from "./components/AnimeCard";
 
 const AnimeList = () => {
@@ -43,7 +43,7 @@ const AnimeList = () => {
           <Text style={styles.title}>アニメを検索</Text>
         )}
       </View>
-      <SearchBox />
+      <SearchBox setAnime={setAnime} />
       <View style={styles.subTitleContainer}>
         <Text style={styles.subTitle}>{subTitle}</Text>
         <TouchableOpacity style={styles.sortButton} onPress={openSort}>
