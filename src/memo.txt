@@ -1,0 +1,110 @@
+  // iosSpecificStyle: {
+    // body: {
+    //   flex: 1,
+    //   backgroundColor: '#00050D',
+    //   margin: "auto",
+    //   width: "auto",
+    //   height: "auto",
+    // },
+    // // iOSに特有のスタイル
+    // backLink: {
+    //   marginLeft: 9,
+    //   marginTop: 16,
+    //   marginBottom: 15,
+    //   flexDirection: "row",
+    // },
+    // text1: {
+    //   marginTop: 2,
+    //   marginBottom:15,
+    //   fontSize: 24,
+    //   fontWeight: 'bold',
+    //   color: '#fff',
+    // },
+    // text2: {
+    //   marginTop: 20,
+    //   color: '#FFF',
+    //   fontSize: 18,
+    //   fontStyle: 'normal',
+    //   fontWeight: '600',
+    //   lineHeight: 18, // 128.571%
+    // },
+    // text3: {
+    //   marginTop: 20,
+    //   color: '#FFF',
+    //   fontSize: 18,
+    //   fontStyle: 'normal',
+    //   fontWeight: '600',
+    //   lineHeight: 18, // 128.571%
+    // },
+    // text4: {
+    //   marginTop: 12,
+    //   color: '#FFF',
+    //   fontSize: 18,
+    //   fontStyle: 'normal',
+    //   fontWeight: '600',
+    //   lineHeight: 18, // 128.571%
+    // },      
+    // text5: {
+    //   marginTop: 12,
+    //   color: '#FFF',
+    //   fontSize: 18,
+    //   fontStyle: 'normal',
+    //   fontWeight: '600',
+    //   lineHeight: 18, // 128.571%
+    //   textAlign: 'center',
+    // },    
+    // reviewSearchBox2: {
+    //   width: "100%",
+    //   height: 44,
+    //   flexShrink: 0,
+    //   borderRadius: 8,
+    //   backgroundColor: '#FFF',
+    //   // marginBottom: 20,
+    //   // 他に必要なスタイルを追加
+    // },
+    // image: {
+    //   width: "100%",
+    //   height: "80%",
+    //   top: 20,
+    //   marginTop: 20,
+    //   marginBottom:20,
+    // },
+    // image1: {
+    //   width: 130,
+    //   height: 24,
+    //   marginTop: 5,
+    // },
+    // arrow: {
+    //   top: 30,
+    //   width: "10%",
+    //   height: "100%",
+    // },
+    // submitButtonText: {
+    //   color: '#333', // カラーコードをシングルクォートで括る
+    //   fontSize: 16,
+    //   fontStyle: 'normal',
+    //   fontWeight: '600',
+    //   lineHeight: 22, // 137.5%
+    // },
+    // submitButton: {
+    //   padding:10,
+    //   alignItems: 'center', // テキストを水平方向に中央揃え
+    //   justifyContent: 'center',
+    // },
+    // textContainer: {
+    //   marginTop: 5,
+    //   borderBottomWidth: 2, // ボーダーラインの幅
+    //   borderBottomColor: '#FFF', // ボーダーラインの色
+    //   marginBottom: 10, // 必要に応じてマージンを調整
+    // },
+    // overlay: {
+    //   position: 'absolute',
+    //   left: 0,
+    //   right: 0,
+    //   bottom: 0,
+    //   top: 0,
+    // },
+  // },
+  // androidSpecificStyle: {
+  //   // Androidに特有のスタイル
+  // },

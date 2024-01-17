@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Image,View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard  } from 'react-native';
-import Menu from './AnimeDetail';
+import { StyleSheet, Text, Image,View, TextInput,  ScrollView,TouchableOpacity, TouchableWithoutFeedback, Keyboard  } from 'react-native';
+
 const Review = (props) => {
   const [title, setTitle] = useState('');
   const [review, setReview] = useState('');
@@ -25,53 +25,41 @@ const Review = (props) => {
   };
 
   return (
-    <View style={styles.reviewContainer}>
+    <ScrollView style={styles.reviewContainer}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.reviewReview}>
         <TouchableOpacity style={styles.backLink} onPress={() => props.navigation.navigate('AnimeDetail', { animeId: '1' })}>
         <Image style={styles.arrow} source={require('.././assets/image/arrow.png')} />
           <Text style={styles.backText}>レビューを書く</Text>
         </TouchableOpacity>
-        <View style={styles.reviewSearchBox}>
+        <View style={styles.titleBox}>
           <TextInput
-            style={styles.input}
+            style={styles.titleInput}
             placeholder="タイトルを入力してください"
             value={title}
             onChangeText={handleTitleChange}
           />
         </View>
-        <View style={styles.reviewSearchBox1}>
+        <View style={styles.reviewBox}>
           <TextInput
-            style={styles.input}
+            style={styles.reviewInput}
             placeholder="レビューを入力してください"
             value={review}
             onChangeText={handleReviewChange}
             multiline
-            // numberOfLines={3}
-            // maxLength={50} 
+            // numberOfLines={3}行数制限
+            // maxLength={50} 文字数制限
           />
         </View>
-        <Text style={styles.reviewText6}>
-            総合評価
-          </Text>
-          <View style={styles.starContainer}>
-            {[1, 2, 3, 4, 5].map((index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handleStarPress(index)}
-              >
-                <Image
-                  source={
-                    index <= rating
-                      ? require('.././assets/image/Stars.png') // 塗りつぶされた星の画像のパス
-                      : require('.././assets/image/Stars.png') // アウトラインの星の画像のパス
-                  }
-                  style={styles.starImage}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
-          <View style={styles.reviewSearchBox2}>
+        <Text style={styles.text1}>総合評価</Text>
+        <Image style={styles.image1}source={require(".././assets/image/Stars.png")}/>
+        <Text style={styles.text1}>ストーリー</Text>
+        <Image style={styles.image1}source={require(".././assets/image/Stars.png")}/>
+        <Text style={styles.text1}>作画</Text>
+        <Image style={styles.image1}source={require(".././assets/image/Stars.png")}/>
+        <Text style={styles.text1}>音楽</Text>
+        <Image style={styles.image1}source={require(".././assets/image/Stars.png")}/>
+          <View style={styles.buttonBox}>
             <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
               <Text style={styles.submitButtonText}>
                 送信
@@ -80,19 +68,13 @@ const Review = (props) => {
           </View>
         </View>
     </TouchableWithoutFeedback>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  reviewContainer: {
-    flex: 1,
+  reviewContainer:{
     backgroundColor: '#00050D',
-    alignItems: 'center', // 縦方向の中央揃え
-    justifyContent: 'center',
-    margin: "auto",
-    width: "auto",
-    height: "auto",
   },
   backLink: {
     marginLeft: 9,
@@ -100,55 +82,78 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     flexDirection: "row",
   },
-  reviewReview: {
-    // styles for review review
+  arrow: {
+    top: 30,
+    width: 9.42,
+    height: 16,
+
   },
-  reviewSearchBox: {
+  backText:{
+      color: '#FFF', // カラーコードをシングルクォートで括る
+      fontSize: 22,
+      fontStyle: 'normal',
+      fontWeight: '700',
+      marginTop: 22,
+      marginLeft: 10,
+  },
+  titleBox:{
     width: 350,
     height: 40,
+    borderRadius: 8,
+    backgroundColor: '#FFF',
+    marginBottom: 10,
+    marginHorizontal: 20,
+  },
+  titleInput:{
+    width: 350,
+    height: 40, // コンポーネントの高さを 100% に設定
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  reviewBox:{
+    width: 350,
+    height: 400,
+    borderRadius: 8,
+    backgroundColor: '#FFF',
+    marginHorizontal: 20,
+  },
+  reviewInput:{
+    width: 350,
+    height: 400, // コンポーネントの高さを 100% に設定
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  text1:{
+    color: '#FFF',
+    fontSize: 14,
+    fontStyle: 'normal',
+    fontWeight: '600',
+    lineHeight: 18, // 128.571%
+    marginLeft: 20,
+    marginTop:20
+  },
+  image1:{
+    marginHorizontal: 20,
+  },
+  buttonBox:{
+    width: 350,
+    height: 44,
     flexShrink: 0,
     borderRadius: 8,
     backgroundColor: '#FFF',
-    marginBottom:40,
-  },
-    reviewSearchBox1: {
-      width: 350,
-      height: 518,
-      backgroundColor: '#FFF',
-      // 他に必要なスタイルを追加
-    },
-    reviewSearchBox2: {
-      width: 350,
-      height: 44,
-      flexShrink: 0,
-      borderRadius: 8,
-      backgroundColor: '#FFF',
-      marginBottom: 20,
-      // 他に必要なスタイルを追加
-    },
-    input: {
-      width: "100%",
-      height: '100%', // コンポーネントの高さを 100% に設定
-      borderColor: 'gray',
-      borderWidth: 1,
-      marginBottom: 10,
-      paddingLeft: 10,
-      // 他に必要な input 共通のスタイルを追加
-    },
-    // 他に必要なスタイルを追  
-  reviewText6: {
-    color: '#FFF', // Corrected to '#FFF' with quotation marks // Enclosed in quotation marks
-    fontSize: 14,
-    fontStyle: 'normal', // Enclosed in quotation marks
-    fontWeight: '600', // Enclosed in quotation marks
-    lineHeight: 18, // 128.571%
+    marginBottom: 20,
+    marginLeft: 20,
     marginTop: 20,
-    marginBottom: 2,
   },
-  submitButton: {
+  submitButton:{
     padding:10,
     alignItems: 'center', // テキストを水平方向に中央揃え
-  justifyContent: 'center',
+    justifyContent: 'center',
+    marginLeft: 20
   },
   submitButtonText: {
     color: '#333', // カラーコードをシングルクォートで括る
@@ -156,26 +161,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '600',
     lineHeight: 22, // 137.5%
-  },
-  backText: {
-    color: '#FFF', // カラーコードをシングルクォートで括る
-    fontSize: 22,
-    fontStyle: 'normal',
-    fontWeight: '700',
-  },
-  arrow: {
-    width: "8%",
-    height: "auto",
-  },
-  starContainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  starImage: {
-    width: 30,
-    height: 30,
-    marginHorizontal: 2,
-    marginBottom: 20,
   },
 });
 

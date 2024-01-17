@@ -31,7 +31,11 @@ const AnimeList = () => {
   const openSort = () => {
     setIsSort(true);
   };
-
+  const handleSearch = (text) => {
+    setSearchText(text);
+    // ここで検索ロジックを実行するか、検索に関連する処理を行います
+    // 例：getAnime(setAnime, text);
+  };
   return (
     <View style={styles.contianer}>
       <View style={styles.titleContainer}>
@@ -43,7 +47,7 @@ const AnimeList = () => {
           <Text style={styles.title}>アニメを検索</Text>
         )}
       </View>
-      <SearchBox />
+      <SearchBox onSearch={handleSearch} />
       <View style={styles.subTitleContainer}>
         <Text style={styles.subTitle}>{subTitle}</Text>
         <TouchableOpacity style={styles.sortButton} onPress={openSort}>
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 32,
     paddingHorizontal: 16,
-    borderRadius: "50%",
+    borderRadius: 50,
     backgroundColor: "#32363D",
   },
   sortButtonText: {

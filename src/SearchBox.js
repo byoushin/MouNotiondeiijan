@@ -17,11 +17,7 @@ const SearchBox = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Image サーチアイコンは入力フォームに追加はできないとのこと
-        source={require('.././assets/image/search_icon.png')} // 画像のパスに変更する
-        style={styles.icon}
-        resizeMode="contain" // 画像のリサイズモードを指定
-      /> */}
+
       <TextInput
         style={styles.input}
         placeholder="タイトル、またはキーワード"
