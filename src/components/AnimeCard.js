@@ -27,7 +27,7 @@ const AnimeCard = ({ anime }) => {
   const insufficientRating = MAX_RATING - rating;
 
   const goWorkPage = () => {
-    navigation.navigate("AnimeDetail", { animeId: animeId });
+    navigation.navigate("AnimeDetail", anime);
   };
 
   const didMount = () => {
